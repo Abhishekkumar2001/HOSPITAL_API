@@ -21,7 +21,13 @@ module.exports.registerDoctor = async (req, res, next) => {
 
 module.exports.registerPatient = async (req, res, next) =>{
     try{
-        const patient = await Patient();
+        req.body.doctor = "64c096698027d05547019b2e";
+        const patient = await Patient(req.body);
+
+        res.status(200).json({
+            success: true,
+            message: "Successfully created a patient"
+        });
     }
     catch (err) {
         res.status(500).json({
