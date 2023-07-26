@@ -1,5 +1,6 @@
 const Doctor = require('../models/doctor');
 const Patient = require('../models/patient');
+const jwt = require('jsonwebtoken');
 
 
 module.exports.registerDoctor = async (req, res, next) => {
@@ -18,6 +19,38 @@ module.exports.registerDoctor = async (req, res, next) => {
 
     }
 };
+
+module.exports.login = async (req, res, next) =>{
+    try {
+        let user = await Doctor.findOne(req.body);
+
+        if (!user || user.password != req.body.password) {
+            return res.status(422).json(
+                {
+                    message: "Invalid UserName or Password"
+                }
+            )
+        }
+
+        return res.status(200).json(
+            {
+                message: "Sign in successful. Here is your token, please keep it safe",
+                data:
+                {
+                    token: jwt.sign(user.toJSON(),'Alert1234',{expiresIn:'1000000'})
+                }
+            }
+        )
+
+
+    } 
+    catch(err){
+        res.status(500).json({
+            success: false,
+            message: `Something Went Wrong ${err}`
+        });
+    }
+}
 
 module.exports.registerPatient = async (req, res, next) =>{
     try{
@@ -79,7 +112,7 @@ module.exports.all_reports = async(req, res, next) =>{
 
 module.exports.AllReports = async (req, res, next) =>{
     try{
-        const patient = await Patient.find({reports: {$elemMatch: { status: req.params.status } },
+        const patient = await Patient.find({reports: {$elenMatch: { status: req.params.status } },
         });
         res.status(200).json({
             success: true,
@@ -89,7 +122,7 @@ module.exports.AllReports = async (req, res, next) =>{
     catch(err){
         res.status(500).json({
             success: false,
-            message: `could not able to fetch the reports ${err}`
+            message: `could not able to fetch the reports`
         });
     }
 
