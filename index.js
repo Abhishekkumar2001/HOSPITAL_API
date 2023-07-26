@@ -1,20 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes/router');
-const db =require("./config/database");
+const db = require("./config/database");
 
 const app = express();
+const PORT = 5000;
 
 app.use(bodyParser.urlencoded({ extended : false}));
 app.use(bodyParser.json());
 
-// Port
-const port = 5000;
 
 app.use(router);
 
 // Listening the Server
-app.listen(port, (err) =>{
+app.listen(PORT, (err) =>{
     if(err){
         console.log(`Server is giving  an error: ${err}`);
     }
