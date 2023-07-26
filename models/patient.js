@@ -1,5 +1,8 @@
+// Importing the mongoose
 const mongoose = require("mongoose");
 
+
+// Create Patient Schema
 const patientSchema = new mongoose.Schema({
   name: {
     type: String,
