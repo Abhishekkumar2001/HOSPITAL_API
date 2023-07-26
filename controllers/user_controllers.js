@@ -22,7 +22,7 @@ module.exports.registerDoctor = async (req, res, next) => {
 module.exports.registerPatient = async (req, res, next) =>{
     try{
         req.body.doctor = "64c096698027d05547019b2e";
-        const patient = await Patient(req.body);
+        const patient = await Patient.create(req.body);
 
         res.status(200).json({
             success: true,
@@ -33,6 +33,29 @@ module.exports.registerPatient = async (req, res, next) =>{
         res.status(500).json({
             success: false,
             message: `Could not create a patient, internal server error`
+        });
+    }
+}
+
+module.exports.createReport = async (req, res, next) =>{
+    try{
+        const patient = await Patient.findById(req.params.id);
+
+         req.body.date = Date.now();
+
+         patient.reports.push(req.body);
+
+         patient.save();
+
+         res.status(200).json({
+            success: true,
+            message: "report submitted successfully"
+         });
+    }
+    catch(err){
+        res.status(500).json({
+            success: false,
+            message: `Could not create a report, internal server error ${err }`
         });
     }
 }

@@ -29,6 +29,8 @@ const patientSchema = new mongoose.Schema({
     ref: "Doctor",
     required: true
   }
+},{
+  timestamps: true
 });
 
 const Patient = new mongoose.model('Patient', patientSchema);

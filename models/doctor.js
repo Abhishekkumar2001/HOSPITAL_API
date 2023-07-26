@@ -11,6 +11,8 @@ const doctorSchema = new mongoose.Schema({
         required: [true, "Please Enter Your Password"],
         minLength: [6, "Password Should be greater than 6 characters"],
     }
+},{
+    timestamps: true
 });
 
 const Doctor = mongoose.model('Doctor', doctorSchema);
