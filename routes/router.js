@@ -19,7 +19,7 @@ const router = express.Router();
 router.post("/doctors/register", registerDoctor);
 
 // Created router for doctor login
-router.post("/login", login);
+router.post("/doctors/login", login);
 
 // Created router for patient register
 router.post(
