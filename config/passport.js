@@ -1,6 +1,9 @@
+// Importing Passport
 const passport = require('passport');
 const Doctor = require('../models/doctor');
 
+
+// JWT from the http Authorization
 var JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 var opts = {}
