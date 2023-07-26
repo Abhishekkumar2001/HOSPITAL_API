@@ -2,7 +2,7 @@ const Doctor = require('../models/doctor');
 const Patient = require('../models/patient');
 const jwt = require('jsonwebtoken');
 
-
+// Render the register for Doctor
 module.exports.registerDoctor = async (req, res, next) => {
     try{
         const doctor = await Doctor.create(req.body);
@@ -20,6 +20,8 @@ module.exports.registerDoctor = async (req, res, next) => {
     }
 };
 
+
+// Render the Login for Doctor
 module.exports.login = async (req, res, next) =>{
     try {
         let user = await Doctor.findOne(req.body);
@@ -52,6 +54,8 @@ module.exports.login = async (req, res, next) =>{
     }
 }
 
+
+// Render the register for patient
 module.exports.registerPatient = async (req, res, next) =>{
     try{
         req.body.doctor = "64c096698027d05547019b2e";
@@ -70,6 +74,7 @@ module.exports.registerPatient = async (req, res, next) =>{
     }
 }
 
+// Render create report for patient
 module.exports.createReport = async (req, res, next) =>{
     try{
         const patient = await Patient.findById(req.params.id);
@@ -93,6 +98,8 @@ module.exports.createReport = async (req, res, next) =>{
     }
 }
 
+
+// Render all reports for patient
 module.exports.all_reports = async(req, res, next) =>{
     try{
         const patient =  await Patient.findById(req.params.id);
@@ -110,6 +117,7 @@ module.exports.all_reports = async(req, res, next) =>{
 }
 
 
+//Render Fetch Reports With Particular patient Status
 module.exports.AllReports = async (req, res, next) =>{
     try{
         const patient = await Patient.find({reports: {$elenMatch: { status: req.params.status } },
